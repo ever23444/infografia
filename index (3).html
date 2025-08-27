@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Redes: LAN, MAN, WAN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 20px 20px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50px, -50px); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .network-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #e0e7ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .network-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .network-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .network-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .lan-icon { background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); }
+        .man-icon { background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); }
+        .wan-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+
+        .network-title h2 {
+            font-size: 2rem;
+            color: #1e293b;
+        }
+
+        .network-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-left: 80px;
+            margin-top: -15px;
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 4px solid;
+        }
+
+        .lan-card { border-left-color: #22c55e; }
+        .man-card { border-left-color: #3b82f6; }
+        .wan-card { border-left-color: #ea580c; }
+
+        .info-card h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            color: #475569;
+        }
+
+        .info-card li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .components-section {
+            background: linear-gradient(135deg, #fef3e2 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 2px solid #fed7aa;
+        }
+
+        .components-title {
+            text-align: center;
+            color: #9a3412;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .components-title::before,
+        .components-title::after {
+            content: '🔧';
+            margin: 0 15px;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #fed7aa;
+            transition: transform 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: scale(1.05);
+        }
+
+        .component-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .component-card h4 {
+            color: #9a3412;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .component-card p {
+            color: #78716c;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-top: 30px;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .table-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1px;
+            background: #e5e7eb;
+        }
+
+        .table-cell {
+            background: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .table-cell.header {
+            background: #f8fafc;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .network-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .table-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .network-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 TIPOS DE REDES DE COMPUTADORAS</h1>
+            <p>LAN • MAN • WAN - Clasificación por Alcance Geográfico</p>
+        </div>
+
+        <div class="content">
+            <!-- RED LAN -->
+            <div class="network-section">
+                <div class="network-title">
+                    <div class="network-icon lan-icon">LAN</div>
+                    <h2>Red de Área Local</h2>
+                </div>
+                <div class="network-subtitle">Local Area Network</div>
+                
+                <div class="network-grid">
+                    <div class="info-card lan-card">
+                        <h3>📍 Características</h3>
+                        <ul>
+                            <li>Alcance: 10m - 1km</li>
+                            <li>Velocidad: 100 Mbps - 10 Gbps</li>
+                            <li>Latencia: Muy baja (< 1ms)</li>
+                            <li>Costo: Bajo</li>
+                            <li>Propiedad: Privada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card lan-card">
+                        <h3>🏢 Ejemplos Reales</h3>
+                        <ul>
+                            <li>Red de oficina corporativa</li>
+                            <li>WiFi de casa/hogar</li>
+                            <li>Red de laboratorio universitario</li>
+                            <li>Red de cibercafé</li>
+                            <li>Red de hospital (planta)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RED MAN -->
+            <div class="network-section">
+                <div class="network-title">
+                    <div class="network-icon man-icon">MAN</div>
+                    <h2>Red de Área Metropolitana</h2>
+                </div>
+                <div class="network-subtitle">Metropolitan Area Network</div>
+                
+                <div class="network-grid">
+                    <div class="info-card man-card">
+                        <h3>📍 Características</h3>
+                        <ul>
+                            <li>Alcance: 5km - 50km</li>
+                            <li>Velocidad: 1-100 Mbps</li>
+                            <li>Latencia: Baja (1-10ms)</li>
+                            <li>Costo: Medio</li>
+                            <li>Propiedad: Mixta</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card man-card">
+                        <h3>🏙️ Ejemplos Reales</h3>
+                        <ul>
+                            <li>Red de TV por cable (Claro)</li>
+                            <li>WiFi municipal de San Salvador</li>
+                            <li>Red universitaria (UCA campus)</li>
+                            <li>Red bancaria metropolitana</li>
+                            <li>Sistema de transporte público</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RED WAN -->
+            <div class="network-section">
+                <div class="network-title">
+                    <div class="network-icon wan-icon">WAN</div>
+                    <h2>Red de Área Amplia</h2>
+                </div>
+                <div class="network-subtitle">Wide Area Network</div>
+                
+                <div class="network-grid">
+                    <div class="info-card wan-card">
+                        <h3>📍 Características</h3>
+                        <ul>
+                            <li>Alcance: 100km+</li>
+                            <li>Velocidad: 1 Mbps - 1 Gbps</li>
+                            <li>Latencia: Alta (10-100ms+)</li>
+                            <li>Costo: Alto</li>
+                            <li>Propiedad: Pública/Privada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card wan-card">
+                        <h3>🌍 Ejemplos Reales</h3>
+                        <ul>
+                            <li>Internet global</li>
+                            <li>Red de cajeros automáticos</li>
+                            <li>Red corporativa multinacional</li>
+                            <li>Sistema telefónico internacional</li>
+                            <li>Red satelital</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMPONENTES DE RED -->
+            <div class="components-section">
+                <div class="components-title">
+                    COMPONENTES DE RED
+                </div>
+                
+                <div class="components-grid">
+                    <div class="component-card">
+                        <div class="component-icon">🖥️</div>
+                        <h4>Computadoras</h4>
+                        <p>Dispositivos finales que generan y reciben datos en la red</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">🔌</div>
+                        <h4>Switch</h4>
+                        <p>Conecta dispositivos en una LAN y maneja el tráfico local</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">📡</div>
+                        <h4>Router</h4>
+                        <p>Interconecta redes diferentes y dirige el tráfico</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">📶</div>
+                        <h4>Access Point</h4>
+                        <p>Proporciona acceso inalámbrico WiFi a la red</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">🔗</div>
+                        <h4>Cables</h4>
+                        <p>Medio físico: UTP Cat6, fibra óptica, coaxial</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">🛡️</div>
+                        <h4>Firewall</h4>
+                        <p>Protege la red filtrando el tráfico malicioso</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">💾</div>
+                        <h4>Servidor</h4>
+                        <p>Proporciona servicios y recursos compartidos</p>
+                    </div>
+                    
+                    <div class="component-card">
+                        <div class="component-icon">🌐</div>
+                        <h4>Módem</h4>
+                        <p>Convierte señales digitales a analógicas y viceversa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLA COMPARATIVA -->
+            <div class="comparison-table">
+                <div class="table-header">
+                    📊 COMPARACIÓN DE TIPOS DE RED
+                </div>
+                
+                <div class="table-content">
+                    <div class="table-cell header">Aspecto</div>
+                    <div class="table-cell header">LAN</div>
+                    <div class="table-cell header">MAN</div>
+                    <div class="table-cell header">WAN</div>
+                    
+                    <div class="table-cell header">Cobertura</div>
+                    <div class="table-cell">Edificio/Campus</div>
+                    <div class="table-cell">Ciudad</div>
+                    <div class="table-cell">País/Continental</div>
+                    
+                    <div class="table-cell header">Velocidad</div>
+                    <div class="table-cell">Muy Alta</div>
+                    <div class="table-cell">Alta</div>
+                    <div class="table-cell">Variable</div>
+                    
+                    <div class="table-cell header">Costo</div>
+                    <div class="table-cell">Bajo</div>
+                    <div class="table-cell">Medio</div>
+                    <div class="table-cell">Alto</div>
+                    
+                    <div class="table-cell header">Tecnología</div>
+                    <div class="table-cell">Ethernet/WiFi</div>
+                    <div class="table-cell">Fibra/Cable</div>
+                    <div class="table-cell">Internet/Satélite</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            📚 Infografía Educativa - Tipos de Redes de Computadoras | LAN, MAN, WAN
+        </div>
+    </div>
+</body>
+</html>
